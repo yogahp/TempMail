@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/yogahp/temp-mail-ruby.svg?branch=master)](https://travis-ci.org/yogahp/temp-mail-ruby)
+[![Build Status](https://travis-ci.org/yogahp/TempMail.svg?branch=master)](https://travis-ci.org/yogahp/TempMail)
 
 # temp-mail-ruby
 
@@ -9,7 +9,7 @@ Ruby client for [TempMail](https://temp-mail.org)
 ### Get available domain names
 
 ```ruby
-require 'tempmail'
+require 'tempmail/client'
 
 client = TempMail::Client.new
 p client.available_domains
@@ -18,7 +18,7 @@ p client.available_domains
 ### Get incoming e-mails
 
 ```ruby
-require 'tempmail'
+require 'tempmail/client'
 
 client = TempMail::Client.new
 p client.incoming_emails('buburgoreng@vps30.com')

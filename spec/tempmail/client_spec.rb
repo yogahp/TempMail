@@ -24,16 +24,22 @@ describe TempMail::Client do
     let(:to_email) { email = described_class.new.available_domains; "test#{email[rand(0..email.count - 1)]}" }
     let(:user_name) { from_email }
     let(:password) { 'd3liv3rusfr0m3v1l' }    
+    let(:smtp_host) { 'smtp.gmail.com' }
+    let(:smtp_port) { 587 }
 
     before do
-      gmail = Gmail.connect(user_name, password)
-      email = gmail.compose      
-      email.to = to_email
-      email.subject = message_subject
-      email.body = message
-      email.deliver!
-      email.deliver!
-      gmail.logout
+      smtp = Net::SMTP.new(smtp_host, smtp_port)
+      smtp.enable_starttls
+      smtp.start('example.com', user_name, password, :login) do
+        smtp.open_message_stream(from_email, to_email) do |f|
+          f.puts "From: #{from_email}"
+          f.puts "To: #{to_email}"
+          f.puts "Subject: #{message_subject}"
+          f.puts
+          f.puts message
+        end
+      end
+
       sleep 2
     end
 

@@ -13,32 +13,22 @@ module TempMail
     def incoming_emails(email)
       hash = Digest::MD5.hexdigest(email)
       response = get_response(uri: "#{host}/request/mail/id/#{hash}/format/json/")
+      puts response.body 
 
       if response.is_a?(Net::HTTPNotFound)
         []
       else
         parsing_json(response_body: response.body, symbolize_names: true)
       end
+    rescue
+      response = get_response(uri: "#{host}/request/mail/id/#{hash}/format/json/")
+      parsing_json(response_body: response.body, symbolize_names: true)
     end
 
     private
 
     def host
-      hosts = TempMail::Host::LIST 
-      result = nil
-
-      hosts.each do |host|
-        result = host
-        break if forbidden?(host: host).eql? false
-      end
-
-      return result
-    end
-
-    def forbidden?(params)
-      host = params[:host]
-      response = get_response(uri: host)
-      response.code.eql? "403"
+      TempMail::Host::NAME
     end
 
     def get_response(params)
