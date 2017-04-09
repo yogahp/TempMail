@@ -23,4 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.2'
   spec.add_development_dependency 'gmail', '~> 0.6.0'
   spec.add_development_dependency 'net-ping', '~> 1.7.8'
+  spec.add_development_dependency 'sendpulse', '~> 0.0.1'
+  spec.add_development_dependency 'dotenv', '~> 2.1.1'
 end

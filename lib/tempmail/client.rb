@@ -13,16 +13,12 @@ module TempMail
     def incoming_emails(email)
       hash = Digest::MD5.hexdigest(email)
       response = get_response(uri: "#{host}/request/mail/id/#{hash}/format/json/")
-      puts response.body 
 
       if response.is_a?(Net::HTTPNotFound)
         []
       else
         parsing_json(response_body: response.body, symbolize_names: true)
       end
-    rescue
-      response = get_response(uri: "#{host}/request/mail/id/#{hash}/format/json/")
-      parsing_json(response_body: response.body, symbolize_names: true)
     end
 
     private
